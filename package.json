@@ -14,8 +14,8 @@
     "url": "git://github.com/flashlizi/fontsubset"
   },
   "dependencies": {
-    "commander": "^2.2.0",
-    "mime": "~1.2.1"
+    "commander": "^2.12.2",
+    "mime": "^1.2.11"
   },
   "keywords": [
     "webfont",

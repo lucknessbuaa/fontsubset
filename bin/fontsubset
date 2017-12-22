@@ -6,11 +6,12 @@ var spawn = require('child_process').spawn;
 var path = require('path');
 var fs = require('fs');
 var mime = require('mime');
+let defaultString = require('./string')
 
 var COMMAND_NAME = 'java';
 var COMMAND_ARGS = [
     '-classpath', 
-    path.join(__dirname, '../lib/sfntly-1.0.0.jar'), 
+    path.join(__dirname, '../lib/sfnttool.jar'), 
     'com.google.typography.font.tools.sfnttool.SfntTool'
 ];
 
@@ -22,14 +23,20 @@ program.option('-b, --base64', 'output font subset in base64 format');
 program.parse(process.argv);
 
 if(program.args[0]){
+    let file = program.file;
     var subsetString = program.string;
     var fontFile = program.args[0];
     var outputFile = program.args[1];
-    var ext = path.extname(fontFile);
-    var dirname = path.dirname(fontFile);
-    var basename = path.basename(fontFile, ext);
+    
     if(!outputFile){
+        let ext = path.extname(fontFile);
+        let dirname = path.dirname(fontFile);
+        let basename = path.basename(fontFile, ext);
         outputFile = path.join(dirname, basename + '-subset' + ext);
+    }
+
+    if (!subsetString) {
+        subsetString = defaultString.join('')
     }
 
     processFont(fontFile, outputFile, subsetString, function(code){
